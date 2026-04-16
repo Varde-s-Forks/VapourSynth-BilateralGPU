@@ -124,7 +124,7 @@ jobs:
         echo "Tag: ${{ inputs.tag }}"
 
     - name: Compress artifact for release
-      if: github.event_name == 'workflow_call' && inputs.tag != ''
+      if: github.event_name == 'workflow_dispatch' && inputs.tag != ''
       run: |
         cd install
 
@@ -138,7 +138,7 @@ jobs:
 
     - name: Release
       uses: softprops/action-gh-release@v3
-      if: github.event_name == 'workflow_call' && inputs.tag != ''
+      if: github.event_name == 'workflow_dispatch' && inputs.tag != ''
       with:
         tag_name: ${{ inputs.tag }}
         files: |
