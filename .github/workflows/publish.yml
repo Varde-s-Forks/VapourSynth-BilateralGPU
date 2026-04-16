@@ -32,11 +32,20 @@ jobs:
       id-token: write
 
     steps:
-    - name: Download all wheels and sdist
+    - name: Download wheels
       uses: actions/download-artifact@v8
       with:
-        name: wheel-*
+        pattern: wheel-*
         path: dist
+        merge-multiple: true
+
+    - name: Download sdist
+      uses: actions/download-artifact@v8
+      with:
+        name: sdist
+        path: dist
+        merge-multiple: true
+      continue-on-error: true
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1

@@ -105,4 +105,3 @@ jobs:
       artifact_name: BilateralGPU-Linux
       artifact_path: install/lib
       build_sdist: false
-
