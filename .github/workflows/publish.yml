@@ -1,0 +1,42 @@
+name: Publish release & PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'which tag to upload to'
+        default: ''
+
+jobs:
+  build-linux:
+    if: github.event.inputs.tag != ''
+    uses: ./.github/workflows/linux.yml
+
+  build-windows:
+    if: github.event.inputs.tag != ''
+    uses: ./.github/workflows/windows.yml
+    with:
+      tag: ${{ github.event.inputs.tag }}
+
+  publish:
+    name: Publish to PyPI
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    if: github.event.inputs.tag != ''
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/vapoursynth-bilateralgpu
+
+    permissions:
+      id-token: write
+
+    steps:
+    - name: Download all wheels and sdist
+      uses: actions/download-artifact@v8
+      with:
+        name: wheel-*
+        path: dist
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

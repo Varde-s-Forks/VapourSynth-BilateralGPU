@@ -9,6 +9,7 @@ on:
       - 'sycl_source/*'
       - '.github/workflows/linux.yml'
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build-linux:
@@ -94,4 +95,14 @@ jobs:
       with:
         name: BilateralGPU-Linux
         path: install/lib/*.so
+
+  build-wheel:
+    name: Package Wheel (Linux)
+    needs: build-linux
+    uses: ./.github/workflows/wheel.yml
+    with:
+      os: ubuntu-24.04
+      artifact_name: BilateralGPU-Linux
+      artifact_path: install/lib
+      build_sdist: false
 
