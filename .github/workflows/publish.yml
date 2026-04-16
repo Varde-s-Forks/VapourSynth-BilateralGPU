@@ -25,8 +25,8 @@ jobs:
     if: github.event.inputs.tag != ''
 
     environment:
-      name: pypi
-      url: https://pypi.org/p/vapoursynth-bilateralgpu
+      name: testpypi
+      url: https://test.pypi.org/p/vapoursynth-bilateralgpu
 
     permissions:
       id-token: write
