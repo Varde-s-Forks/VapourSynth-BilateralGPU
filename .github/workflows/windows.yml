@@ -118,6 +118,11 @@ jobs:
         name: BilateralGPU-Windows
         path: install/bin/*.dll
 
+    - name: Print event and tag
+      run: |
+        echo "Event: ${{ github.event_name }}"
+        echo "Tag: ${{ inputs.tag }}"
+
     - name: Compress artifact for release
       if: github.event_name == 'workflow_call' && inputs.tag != ''
       run: |
